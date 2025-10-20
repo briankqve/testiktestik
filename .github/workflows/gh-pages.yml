@@ -16,6 +16,20 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Debug - list repo root
+        run: |
+          echo "Working directory: $(pwd)"
+          ls -la
+
+      - name: Debug - list three-page-website folder
+        run: |
+          ls -la three-page-website || true
+
+      - name: Debug - list publish folder
+        run: |
+          echo "Listing three-page-website/public:" 
+          ls -la three-page-website/public || true
+
       - name: Archive site
         uses: actions/upload-pages-artifact@v1
         with:
