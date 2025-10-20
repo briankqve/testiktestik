@@ -1,27 +1,30 @@
-name: Deploy static site to GitHub Pages
+name: Deploy static site to GitHub Pages (using official actions)
 
 on:
   push:
-    branches:
-      - main
+    branches: [ main ]
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
 
 jobs:
-  deploy:
+  build-and-deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Archive site
+        uses: actions/upload-pages-artifact@v1
         with:
-          persist-credentials: false
-      - name: Setup Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: '18'
-      - name: Install dependencies
-        run: |
-          echo "No build step required for static files"
+          path: ./three-page-website/public
+
+  deploy:
+    needs: build-and-deploy
+    runs-on: ubuntu-latest
+    steps:
       - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v4
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./three-page-website/public
-          publish_branch: gh-pages
+        uses: actions/deploy-pages@v1
+
