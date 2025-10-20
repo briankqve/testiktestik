@@ -1,5 +1,0 @@
-User-agent: *
-Allow: /
-Sitemap: https://briankqve.github.io/testiktestik/sitemap.xml
-User-agent: *
-Disallow: /src/
